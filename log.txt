@@ -1,0 +1,21 @@
+# Development activity summary
+
+tool=Codex
+date=2026-10-30
+problem_id=PS08
+parent_agent=none
+
+SESSION START
+The participant supplied the organizer repository and requested a complete hackathon implementation pushed to akshgarg007/Bits-please. The target repository was empty. Codex read the ten statements and shared instructions, then requested a problem selection.
+
+USER TURN
+User selected: "choose for me which is best and more scorable"
+Codex chose PS08 because the local authorization, persistence and audit requirements are concrete and demonstrable. No scoring weights were supplied and no winning outcome was promised. The organizer repository contains PS01.md through PS10.md, not PS folders; no problem material was deleted.
+
+IMPLEMENTATION
+Created closed Pydantic action models, label joins, trusted policy, three protected tools, SQLite state, immutable provenance-carrying reports, recipient enforcement and hash-linked audit records. Added a Streamlit console, live deterministic scenarios, a labeled evaluator, documentation, AI-assistance disclosure and GitHub Actions configuration.
+
+VERIFICATION
+Core tests: 50 passed. Initial UI test found an assertion that included the sidebar status in scenario success counts; corrected it. Final suite: 52 passed in 13.06s. Labeled evaluation: 16/16 correct, 12 expected denials with zero protected tool executions, 16/16 complete audit records. CLI ran all four scenarios. Browser overview rendering inspected.
+
+This file is an activity summary, not a native agent trace export. It contains no credentials or unrelated application data.

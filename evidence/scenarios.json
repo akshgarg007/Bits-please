@@ -1,0 +1,242 @@
+{
+  "mode": "live deterministic proposals (not LLM or replay)",
+  "scenarios": [
+    {
+      "scenario": "authorized",
+      "workflow": "e0f461af-d443-4794-bd4f-1f04615bb066",
+      "report": "reports/demo-e0f461af",
+      "steps": [
+        {
+          "step": "Read finance document",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 1,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        },
+        {
+          "step": "Save derived report",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 2,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        },
+        {
+          "step": "Deliver to finance team",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 3,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "injection",
+      "workflow": "f16b0528-2798-4171-9c26-64752e32bc81",
+      "report": "reports/demo-f16b0528",
+      "steps": [
+        {
+          "step": "Read memo containing hostile instructions",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 4,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        },
+        {
+          "step": "Attempt a forged PUBLIC label",
+          "allowed": false,
+          "code": "INVALID_ACTION",
+          "reason": "Action does not match the closed tool schema.",
+          "event_id": 5,
+          "effective_label": null
+        },
+        {
+          "step": "Save summary with inherited restrictions",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 6,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        },
+        {
+          "step": "Attempt exfiltration to public inbox",
+          "allowed": false,
+          "code": "RECIPIENT_CLEARANCE",
+          "reason": "Recipient cannot receive the effective level and compartments.",
+          "event_id": 7,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "resume",
+      "workflow": "ce5a93b0-de37-4302-a339-432bc2984aca",
+      "report": "reports/demo-ce5a93b0",
+      "steps": [
+        {
+          "step": "Read restricted HR plan",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 8,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "HR"
+            ]
+          }
+        },
+        {
+          "step": "Save restricted report",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 9,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "HR"
+            ]
+          }
+        },
+        {
+          "step": "Resume persisted workflow: public delivery",
+          "allowed": false,
+          "code": "RECIPIENT_CLEARANCE",
+          "reason": "Recipient cannot receive the effective level and compartments.",
+          "event_id": 10,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "HR"
+            ]
+          }
+        },
+        {
+          "step": "Resume persisted workflow: HR delivery",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 11,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "HR"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "scenario": "compartments",
+      "workflow": "415fb1b1-a2cd-48c9-9cd7-243af5496592",
+      "report": "reports/demo-415fb1b1",
+      "steps": [
+        {
+          "step": "Read finance",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 12,
+          "effective_label": {
+            "level": "CONFIDENTIAL",
+            "compartments": [
+              "FINANCE"
+            ]
+          }
+        },
+        {
+          "step": "Read HR",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 13,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "FINANCE",
+              "HR"
+            ]
+          }
+        },
+        {
+          "step": "Save combined summary",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 14,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "FINANCE",
+              "HR"
+            ]
+          }
+        },
+        {
+          "step": "Finance-only recipient lacks HR",
+          "allowed": false,
+          "code": "RECIPIENT_CLEARANCE",
+          "reason": "Recipient cannot receive the effective level and compartments.",
+          "event_id": 15,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "FINANCE",
+              "HR"
+            ]
+          }
+        },
+        {
+          "step": "Security team has both compartments",
+          "allowed": true,
+          "code": "ALLOW",
+          "reason": "Identity, operation, resource and information-flow checks passed.",
+          "event_id": 16,
+          "effective_label": {
+            "level": "RESTRICTED",
+            "compartments": [
+              "FINANCE",
+              "HR"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "audit_chain_valid": true,
+  "delivery_count": 3
+}
